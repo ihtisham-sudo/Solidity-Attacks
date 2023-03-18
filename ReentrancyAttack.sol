@@ -74,3 +74,37 @@ contract Attack
     //     require(sent, "failed to send ether");
     // }
  //Moved "Balances[msg.sender] = 0" under "require(bal > 0, "Insuficient balance");"
+ 
+ 
+ //Another way to secure smart contract from reentrancy attack is by using a reentrancyguard.
+ //Secure Smart Contract Will Look Like 
+ 
+// contract EtherStore
+// {
+//     mapping (address => uint) public balances;
+
+//     function deposit() public payable
+//     {
+//         balances[msg.sender] += msg.value;
+//     }
+//     bool internal locked;
+//     modifier noReentrant ()
+//     {
+//         require(!locked, "No Re-entrancy");
+//         locked = true;
+//         _;
+//         locked = false;
+//     }
+//     function withdraw() public noReentrant
+//     {
+//         uint bal = balances[msg.sender];
+//         require(bal > 0, "Insuficient balance");
+//         (bool sent,) = msg.sender.call{value: bal}("");
+//         require(sent, "failed to send ether");
+//         balances[msg.sender] = 0;
+//     }
+//     function getBalance() public view returns (uint)
+//     {
+//         return address(this). balance;
+//     }
+// }
